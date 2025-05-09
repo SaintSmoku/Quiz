@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game</title>
+    <style>
+      .content{
+        position: relative;
+    z-index: 1;
+      }
+      ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+  
+    li {
+      color: #ddd;
+      background-color: #000000;
+      border: 1px solid #ddd;
+      padding: 10px;
+      width: 20%;
+      margin-bottom: 5px;
+      border-radius: 4px;
+    }
+    body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 5%;
+            background-color: #000000;
+            color: #333;
+            transition: background-image 0.5s ease;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+  
+    h1 {
+        color: #fff;
+        text-shadow:
+            0 0 25px #fff,
+            0 0 50px #fff;   
+        text-align: center;
+        margin-top: 20px;
+        font-size: 60px;
+        }
+        h3 {
+      color: #fff;
+
+      font-size: 18px;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+    .form__group {
+   position: relative;
+   padding: 15px 0 0;
+   margin-top: 10px;
+   width: 50%;
+    }
+    .form__field {
+      font-family: inherit;
+      width: 50%;
+      border: 0;
+      border-bottom: 2px solid #b9ffb2;
+      outline: 0;
+      font-size: 1.3rem;
+      color: #fff;
+      padding: 7px 0;  
+      background: transparent;
+      transition: border-color 0.2s;
+    }
+    .form__field::placeholder {
+      color: transparent;
+    }
+    .form__field:placeholder-shown ~ .form__label {
+      font-size: 1.3rem;
+      cursor: text;
+      top: 20px;
+    }
+    .form__label {
+      position: absolute;
+      top: 0;
+      margin-left: 20%;
+      display: block;
+      transition: 0.2s;
+      font-size: 1rem;
+      color: #92ffb2;
+    }
+    .form__field:focus {
+      padding-bottom: 6px;
+      font-weight: 700;
+      border-width: 3px;
+      border-image: linear-gradient(to right, #11998e, #38ef7d);
+      border-image-slice: 1;
+    }
+    .form__field:focus ~ .form__label {
+      position: absolute;
+      top: 0;
+      display: block;
+      transition: 0.2s;
+      font-size: 1rem;
+      color: #119928;
+      font-weight: 700;
+    }
+    /* reset input */
+    .form__field:required, .form__field:invalid {
+      box-shadow: none;
+    }
+    .a3 {
+      background: transparent;
+        position: relative;
+        display: inline-block;
+        font-size: 1em;
+        letter-spacing: .1em;
+        font-weight: bold;
+        color: rgb(129, 128, 128);
+        text-decoration: none;
+        text-transform: uppercase;
+        border: 2px solid rgb(98, 255, 78);
+        padding: 10px 30px;
+        z-index: 1;
+        overflow: hidden;
+        transition: color 1s, box-shadow 1s;
+    }
+    .a3:hover {
+        transition-delay: 0s, 0.1s;
+        color: #fff;
+        box-shadow:
+            0 0 10px rgb(98, 255, 78),
+            0 0 20px rgb(98, 255, 78),
+            0 0 40px rgb(98, 255, 78),
+            0 0 80px rgb(98, 255, 78),
+            0 0 160px rgb(98, 255, 78);
+    }
+    .a3::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -50px;
+        width: 0;
+        height: 100%;
+        background: rgb(98, 255, 78);
+        transform: skewX(35deg);
+        z-index: -1;
+        transition: 0.1s;
+    }
+    .a3:hover:before {
+        width: 100%;
+    }
+    .delete-btn {
+  background: none;
+  border: none;
+  color: red;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+  font-size: 1rem;
+  float: right;
+}
+ul.name-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 багана */
+  gap: 10px;
+  padding-left: 0;
+  list-style: none;
+  justify-items: center;
+}
+ul.name-list li {
+  background-color: #000;
+  color: #ddd;
+  border: 1px solid #ddd;
+  padding: 10px;
+  width: 90%; /* баганад тааруулахын тулд */
+  border-radius: 4px;
+}
+.stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/stardust.png');
+            animation: moveStars 60s linear infinite;
+            opacity: 0.3;
+            z-index: -100;
+        }
+        @keyframes moveStars {
+            0% { background-position: 0 0; }
+            100% { background-position: 1000px 1000px; }
+        }
+    </style>
+</head>
+<body>
+  <div class="stars"></div>
+    <div id="step1" class="content">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2%;">
+        <!-- Зүүн талд товч -->
+        <button onclick="history.back()" style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 5px;">
+          ← Back
+        </button>
+      
+        <!-- Голд гарчиг -->
+        <h1 style="flex: 1; text-align: center; margin: 0;">{{ request.session.name }}</h1>
+      
+        <!-- Баруун талын хоосон блок (төвлөрлийг тэнцвэржүүлнэ) -->
+        <div style="width: 96px;"></div>
+      </div>
+        <center>
+        <h3>Оролцогчдын нэрсийг оруулах:</h3>
+        <form action="" method="post">
+          {% csrf_token %}
+        <div class="form__group field">
+          <input type="input" class="form__field" placeholder="username" name="username"  required oninvalid="this.setCustomValidity('Тоглогчийн нэрийг оруулна уу')"
+          oninput="this.setCustomValidity('')" />
+          <label for="username" class="form__label"> Нэр</label>
+        </div>
+        <br>
+        <button type="submit" class="a3">Нэмэх</button>
+        </form>
+        <ul id="nameList" class="name-list">
+          {% for user in users %}
+          <li>
+            {{ user.username }}
+            <form action="/delete-user/{{ user.id }}/" method="post" style="display: inline;">
+              {% csrf_token %}
+              <button type="submit" class="delete-btn">Delete</button>
+            </form>
+          </li>
+          {% empty %}
+              <li>Нэрс байхгүй байна</li>
+          {% endfor %}
+      </ul>
+        <a href="/team_count" class="a3">Дараагийнх</a>
+        </center>
+      </div>
+</body>
+<!-- <script>
+  window.onload = function() {
+            const savedImage = localStorage.getItem("backgroundImage");
+            if (savedImage) {
+                document.body.style.backgroundImage = `url('${savedImage}')`;
+            }
+        };
+</script> -->
+</html>

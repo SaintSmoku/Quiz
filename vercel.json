@@ -1,0 +1,18 @@
+{
+    "builds": [
+        {
+            "src": "project_v2/wsgi.py",
+            "use": "@vercel/python",
+            "config": {
+                "maxLabdaSize": "15mb",
+                "runtime": "python 3.9"
+            }
+        }
+    ],
+    "routes": [
+        {
+            "src": "/(.*)",
+            "dest": "project_v2/wsgi.py"
+        }
+    ]
+}
