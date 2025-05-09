@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 5%;
+            background-color: #111;
+            color: #fff;
+            transition: background-image 0.5s ease;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* Тоглоомын төрлүүдийн элементийг томруулах */
+        .quiz-card {
+            background: linear-gradient(145deg, rgba(255, 0, 212, 0.5), rgba(0, 255, 255, 0.5));
+            border: 3px solid rgb(255, 0, 212);
+            color: white;
+            padding: 40px 60px;
+            border-radius: 20px;
+            font-size: 1.8em; /* Том үсэг */
+            text-shadow: 0 0 20px rgb(255, 0, 212);
+            transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+            width: 250px;
+            height: 180px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        /* Хөвөх эффект */
+        .quiz-card:hover {
+            transform: scale(1.1); /* Илүү томорч харагдана */
+            box-shadow: 0 0 40px rgb(255, 0, 212); /* Илүү тод гэрэлтэх */
+            background-color: rgba(0, 255, 255, 0.7); /* Илүү гэрэлтсэн */
+        }
+
+        /* Subquiz карт */
+        .subquiz-card {
+            background: linear-gradient(145deg, rgba(0, 255, 255, 0.3), rgba(255, 0, 212, 0.3));
+            border: 2px solid rgb(255, 0, 212);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 15px;
+            font-size: 1.3em; /* Том үсэг */
+            text-shadow: 0 0 10px rgb(255, 0, 212);
+            transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+            margin: 10px;
+            width: 230px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        /* Хөвөх эффект */
+        .subquiz-card:hover {
+            transform: scale(1.05); /* Илүү томорч харагдана */
+            box-shadow: 0 0 20px rgb(255, 0, 212); /* Илүү тод гэрэлтэх */
+            background-color: rgba(255, 0, 212, 0.5); /* Илүү гэрэлтсэн */
+        }
+
+        /* Төвлөрсөн гарчиг */
+        h1 {
+            color: white;
+            text-shadow: 0 0 15px #f0f;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+
+        h2 {
+            color: white;
+            text-shadow: 0 0 10px #f0f;
+            margin-bottom: 20px;
+        }
+
+        /* Бүтэц */
+        .quiz-container, .subquiz-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        /* Бүрэн дараах хэсэг */
+        .back-button {
+            padding: 10px 20px;
+            background: rgba(255, 0, 212, 0.3);
+            text-shadow: 0 0 15px rgb(255, 0, 212);
+            border: 3px solid rgb(255, 0, 212);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin-left: 50px;
+        }
+
+        .a1 {
+            background: transparent;
+            position: relative;
+            display: inline-block;
+            font-size: 1em;
+            letter-spacing: .1em;
+            font-weight: bold;
+            color: rgb(129, 128, 128);
+            text-decoration: none;
+            text-transform: uppercase;
+            border: 2px solid rgb(255, 78, 78);
+            padding: 10px 30px;
+            z-index: 1;
+            overflow: hidden;
+            transition: color 1s, box-shadow 1s;
+        }
+        .a1:hover {
+            transition-delay: 0s, 0.1s;
+            color: #fff;
+            box-shadow:
+            0 0 10px rgb(255, 78, 78),
+            0 0 20px rgb(255, 78, 78),
+            0 0 40px rgb(255, 78, 78),
+            0 0 80px rgb(255, 78, 78),
+            0 0 160px rgb(255, 78, 78);
+        }
+        .a1::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -50px;
+            width: 0;
+            height: 100%;
+            background: rgb(255, 0, 0);
+            transform: skewX(35deg);
+            z-index: -1;
+            transition: 0.1s;
+        }
+        .a1:hover:before {
+            width: 100%;
+        }
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/stardust.png');
+            animation: moveStars 60s linear infinite;
+            opacity: 0.3;
+            z-index: -100;
+        }
+        @keyframes moveStars {
+            0% { background-position: 0 0; }
+            100% { background-position: 1000px 1000px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars"></div>
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2%;">
+        <button class="back-button" onclick="history.back()">← Back</button>
+        <h1 style="flex: 1; text-align: center; margin: 0;">Тоглоомын төрлүүд</h1>
+        <div style="width: 96px;"></div>
+    </div>
+
+    <div class="quiz-container">
+        {% for quiz in quizzes_data %}
+            <a href="?quiz_id={{ quiz.id }}">
+                <div class="quiz-card">
+                    {{ quiz.name }}
+                </div>
+            </a>
+        {% empty %}
+            <p style="color:gray;">Төрөл байхгүй байна.</p>
+        {% endfor %}
+    </div>
+
+    {% if selected_quiz %}
+        <div class="modal-content" style="margin-top: 20px; padding: 20px; background: #333; color: white; border-radius: 10px;">
+            <h2>{{ selected_quiz.name }}</h2>
+            <div class="subquiz-container">
+                {% for subquiz in subquizzes %}
+                    <a href="{% url 'show_time' subquiz.id %}">
+                        <div class="subquiz-card">
+                            <strong>Point:</strong> {{ subquiz.point }}
+                        </div>
+                    </a>
+                {% empty %}
+                    <p>No questions available.</p>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+    <br><br><br><br><br><br><br>
+<center>
+    <a href="/endgame" class="a1">Тоглоомыг дуусгах</a>
+</center>
+</body>
+</html>

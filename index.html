@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Background</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 5%;
+            background-color: #000000;
+            color: #333;
+            transition: background-image 0.5s ease;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        h1 {
+            color: #fff;
+            text-shadow:
+                0 0 25px #fff,
+                0 0 50px #fff;   
+            text-align: center;
+            margin-top: 20px;
+        }
+        .a1 {
+            background: transparent;
+            position: relative;
+            display: inline-block;
+            font-size: 1.5em;
+            letter-spacing: .1em;
+            color: rgb(255, 0, 212);
+            text-decoration: none;
+            text-transform: uppercase;
+            border: 2px solid rgb(255, 0, 212);
+            padding: 10px 30px;
+            z-index: 1;
+            overflow: hidden;
+            transition: color 1s, box-shadow 1s;
+        }
+        .a1:hover {
+            color: #fff;
+            box-shadow:
+                0 0 10px rgb(255, 0, 212),
+                0 0 20px rgb(255, 0, 212),
+                0 0 40px rgb(255, 0, 212),
+                0 0 80px rgb(255, 0, 212),
+                0 0 160px rgb(255, 0, 212);
+        }
+        .gamename { 
+            text-align: center;
+            margin-top: 20px;
+            font-size: 20px;
+        }
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/stardust.png');
+            animation: moveStars 60s linear infinite;
+            opacity: 0.3;
+        }
+        @keyframes moveStars {
+            0% { background-position: 0 0; }
+            100% { background-position: 1000px 1000px; }
+        }
+
+        .end-container {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 30px rgba(255, 0, 255, 0.3);
+        }
+
+        .end-container h1 {
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            color: #fff;
+            text-shadow: 0 0 20px #ff00ff;
+        }
+
+        .end-container p {
+            font-size: 1.5em;
+            color: #e0e0e0;
+            text-shadow: 0 0 10px #f0f;
+        }
+    </style>
+</head>
+<body>
+    <div class="stars"></div>
+    <div class="end-container">
+        <div style="text-align:center; margin-top:50px;">
+            <h2 style="color:white; text-shadow:0 0 15px #f0f;">Тоглоомын төрлүүд</h2>
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 30px;">
+                {% for quiz in quizzes %}
+                    <div style="
+                        background: rgba(255, 0, 212, 0.2);
+                        border: 2px solid rgb(255, 0, 212);
+                        color: white;
+                        padding: 20px 30px;
+                        border-radius: 20px;
+                        font-size: 1.5em;
+                        text-shadow: 0 0 10px rgb(255, 0, 212);
+                        transition: transform 0.3s, box-shadow 0.3s;
+                    " onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 0 20px rgb(255,0,212)';"
+                      onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">
+                        {{ quiz.name }}
+                    </div>
+                {% empty %}
+                    <p style="color:gray;">Төрөл байхгүй байна.</p>
+                {% endfor %}
+            </div>
+        </div>
+        <div>
+            <form action="" method="post">
+                {% csrf_token %}
+                <h1>
+                    <input type="date" class="gamename" name="game_name" value="{{ today_date }}" required />
+                </h1>
+                <br><br>
+                <center><button type="submit" class="a1">Start</button></center>
+            </form>
+            <br>
+            <br>
+            <center><a class="a1" href="">Exit</a></center>
+        </div>
+    </div>
+
+    <!-- Custom File Input
+    <input type="file" id="bgInput" accept="image/*">
+    <label for="bgInput" class="custom-file-label"><i>📁</i></label> -->
+
+    <!-- <script>
+        // Load the saved background image on page load
+        window.onload = function() {
+            const savedImage = localStorage.getItem("backgroundImage");
+            if (savedImage) {
+                document.body.style.backgroundImage = `url('${savedImage}')`;
+            }
+        };
+
+        // Function to handle image upload and save it in localStorage
+        document.getElementById("bgInput").addEventListener("change", function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const imageData = e.target.result; // Base64 data URL of the image
+                    document.body.style.backgroundImage = `url('${imageData}')`;
+                    localStorage.setItem("backgroundImage", imageData); // Save to localStorage
+                    alert("Background image saved locally!");
+                };
+                reader.readAsDataURL(file); // Read the file as a data URL
+            }
+        });
+    </script> -->
+</body>
+</html>
